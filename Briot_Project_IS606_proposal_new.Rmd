@@ -1,0 +1,163 @@
+---
+output: pdf_document
+---
+```{r include=FALSE, cache=FALSE}
+# DO NOT REMOVE
+# THIS IS FOR SETTING SOME PLOTTING PARAMETERS SO THAT YOUR PLOTS DON'T TAKE UP TOO MUCH SPACE
+# IF YOU WOULD LIKE TO CHANGE THESE, SEE HELP FILES ON THE par() FUNCTION
+# OR ASK FOR HELP
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/manual-', cache.path='cache/manual-', fig.align='center', fig.show='hold', par=TRUE)
+## tune details of base graphics (http://yihui.name/knitr/hooks)
+knit_hooks$set(par=function(before, options, envir){
+if (before && options$fig.show!='none') par(mar=c(4,4,.2,.1),cex.lab=.95,cex.axis=.9,mgp=c(2,.7,0),tcl=-.3)
+})
+```
+
+```{r, eval = TRUE, echo = FALSE}
+# Data manipulation from raw data require following packages
+library(dplyr)
+library(tidyr)
+library(lubridate)
+```
+
+```{r, eval = TRUE, echo = FALSE}
+# load data
+# downloaded data from site and stored in my local PC in directory .\Data
+# To explore the research question, we will select only the month of October 2014
+# The data was downloaded month by month, 1 csv file per month and rename as 2014mm_citibike_tripdata.csv
+
+tb_10_2014 <- read.csv(file="./Data/201410_citibike_tripdata.csv",head=TRUE,sep=",")
+
+```
+
+
+### Research question 
+
+In New York City (NYC), there is since 2013 a paying bike sharing system "Citibike".  Riders can rent bike at various docking stations throughout the city and returned them to another docking station.  There are 2 main forms of payment; "pay as you go" meaning per ride or "Annual Subscription" meaning pay a flat fee for year with unlimited rides
+There is a time limit on how long the bike can be in use per ride; 30 minutes for non-subscribers and 45 minutes for subscribers.  Financial penalties are applied in the cases the ride exceed these limits.
+
+We are interested to explore whether there is any relationship between the age of rider and ride duration.  Furthermore whether the gender of rider, or whether the ride is on weekday vs weekend day impact the ride duration.  Since the data only contains additional information such as birth year and gender for rider that are annual subscribers, we will limit our analysis to this subset.  In addition we will only limit the data set to the last 3 months (September, October, and December) of 2014.
+
+### Cases 
+
+The raw data is a record of every ride in the system (for the months of September, October, and December 2014) with the following characteristics;   
+
+* with a duration of > 1 minute
+
+* that begin at publicly available stations (thereby excluding trips that originate at citibike depots for rebalancing or maintenance purposes).
+
+The data includes the following fields:  
+* Trip Duration (seconds)
+* Start Time and Date
+* Stop Time and Date
+* Start Station Name
+* End Station Name
+* Station ID
+* Station Lat/Long
+* Bike ID
+* User Type (Customer = 24-hour pass or 7-day pass user; Subscriber = Annual Member)
+* Gender (Zero=unknown; 1=male; 2=female)
+* Year of Birth
+
+For the purpose of our analysis, we will subset the data to User Type = "Subscriber".  In addition, we will calculate the age of rider as follows:  
+     Age = Year of ride - Year of Birth
+
+We will derive whether the ride occurred on a weekday or a weekend/holiday as well the new field: rideday will have values 1 = Weekday, 0 = Weekend or Holiday  
+Note: dayofweek is as follows: 1 - Sunday, 2 - Monday, 3 - Tuesday,  4 - Wednesday, 5 - Thursday, 6 - Friday, 7 - Saturday
+
+Finally, the ride duration will be converted from seconds to minutes and round to nearest whole minute number (up or down).  The new file durationminute will be added to data set.
+
+```{r, eval = TRUE, echo = FALSE}
+# Subset only rows where User Type = Subscriber
+tb_10_2014_2 <- tb_10_2014 %>% filter(usertype == "Subscriber" )
+
+# Separate Date & time from startime
+tb_10_2014_2 <- separate(tb_10_2014_2, starttime, c("startdate", "starttime2"), sep = " ")
+
+# Extract the day of week and year of ride ride.year
+tb_10_2014_2$dayofweek <- wday(mdy(tb_10_2014_2$startdate))
+tb_10_2014_2$ride.year <- year(mdy(tb_10_2014_2$startdate))
+tb_10_2014_2$rideday <- ifelse((tb_10_2014_2$dayofweek == 1 | tb_10_2014_2$dayofweek == 6 | tb_10_2014_2$startdate == "10/13/2014"), 0, 1)
+
+# Derive ride duration in minute rounded and age of rider
+tb_10_2014_2 <- mutate(tb_10_2014_2, age = ride.year - birth.year, durationminute = round(tripduration/60, digit = 0))
+
+# Select only a subset of the columns
+tb_10_2014_3 <- tb_10_2014_2 %>% select(age, durationminute, rideday, gender, dayofweek)
+
+```
+
+### Data collection 
+
+The data was collected by the operator of the system.  The data is captured by the docking stations and centralized. 
+
+### Type of study ###
+
+The data is collected by "observations", it represents the actual experience of the riders that use bike sharing system.
+
+
+### Data Source 
+
+The raw data can be found at:  
+[http://www.citibikenyc.com/system-data]
+
+
+### Response 
+
+Ride duration in minutes, numerical
+This variable represents the ride duration in minutes.
+
+
+### Explanatory 
+
+Age (numerical), Gender of rider (categorical), weekday category (categorica)
+weekday category (rideday in data set) is a derive variable see R section above that indicate whether the ride took place on a weekday or a weekend day (or Holiday, in this case 10/13/2014 Columbus day)
+
+### Relevant summary statistics 
+
+**Provide summary statistics relevant to your research question. For example, if you are comparing means across groups provide means, SDs, sample sizes of each group. This step requires the use of R, hence a code chunk is provided below. Insert more code chunks as needed.**
+
+Summary statistics on our selected data set:
+```{r, eval = TRUE, echo = FALSE}
+summary(tb_10_2014_3)
+```
+
+From this summary, we can see that with have 5 rows with NA for age. The reason being is that the Year of Birth is not available for these entries.  We will only consider complete row for our analysis.  
+Looking at duration in minute, we have a number that clearly represent an outlier with a value = 90277.00
+Note: Subscriber my ride without monetary penalty for the first 45 minutes of every ride.
+
+Also, we have some observations for which gender is not specified (gender = 0).  The values for gender are Male = 1, Female = 2.  We will remove the rows where gender = 0.
+
+Pricing (Current rate as of 2016)
+$155 / year	                            +$2.50	              +$9	                    +$9
+$14.95 / month with annual commitment 	+$2.50              	+$9	                    +$9
+                                        between 45-75 minutes	between 75-105 minutes	every additional 30 minutes after
+
+Checking the data set against "comple.case" function give us the 5 observation with missing age.  We will remove these entries from data set.                                      
+```{r, eval = TRUE, echo = FALSE}
+tb_10_2014_f <- tb_10_2014_3[complete.cases(tb_10_2014_3),]
+tb_10_2014_f <- filter(tb_10_2014_f, gender != 0)
+
+summary(tb_10_2014_f)
+```
+  
+Some summary statistics, we will run some additional summary statistics for Age and Ride Duration in minutes.  Also we will these statistics separating these by gender and/or ride is on a week day or weekend day.
+
+```{r, eval = TRUE, echo = FALSE}
+tb_10_2014_f %>% summarize(max(age), min(age), mean(age),  n())
+tb_10_2014_f %>% summarize(max(durationminute), min(durationminute), mean(durationminute), n())
+
+tb_10_2014_f %>% group_by(gender) %>%
+                 summarize(max(age), min(age), mean(age),  n()) 
+tb_10_2014_f %>% group_by(gender) %>%
+                 summarize(max(durationminute), min(durationminute), mean(durationminute),  n())
+
+tb_10_2014_f %>% group_by(rideday) %>%
+                 summarize(max(age), min(age), mean(age),  n()) 
+tb_10_2014_f %>% group_by(rideday) %>%
+                 summarize(max(durationminute), min(durationminute), mean(durationminute),  n())
+```
+
+***
