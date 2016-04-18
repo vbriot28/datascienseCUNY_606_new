@@ -1,0 +1,144 @@
+---
+title: "CUNY606 Linear Regression Homework"
+author: "Valerie Briot"
+date: "April 17, 2016"
+output: html_document
+---
+
+The following are the homework assigned for CUNY 606 Class; Probability and Statistics,  on chapter 7 pertaining to linear regression.
+
+###Exercise 7.24: Nutrition at Startbucks, Part 1.  
+The scatterplot below shows the realtion between the number of calories and amount of carbohydrates (in grams) Startbucks food menu items contain.  Since Startbucks only lists the number of calories on the display items, we are interested in predicting the amount of carbs a mnu item has based on its calorie content.
+
+a) Describe the relationship between the number of calories and amount of carbohydrates (in grams) that Starbucks food menu items contain?
+There are a moderate to weak positive relationship between the number of calories adn the amount of carbohydrates.  It appears from the graph, that the fit is better for data point representing lower number of calories.
+
+b) In this scenario, what are the explanatory and response variables?  
+The explanatory variable would be the amount of carbohydrates (in grams) and the response variable would be the number of calories in the food menu item from Starbucks.
+
+c) Why might we want to fit a regression line to these data?
+We might want to predict the amount of carbohydrate (in grams) a starbucks menu food items contains by looking at the number of calories in the item.
+
+d) Do these data meet the conditions for fitting the least squares line?  
+The following are the conditions for fitting the least squares lines:
+* Linearity:  
+  The data should show a linear trend.  From the scatterplot as noticed in a), we can see that the data show a moderate to weak linear relationship.
+
+* Nearly normal residual:  
+From the histogram for residual, we can see that the residuals in this case have a slightly skeweed distribution to the left.
+
+* Constant variability:  
+In this case, from the residual plot, we can see that we do not have constant variability for residuals.  The data fit the linear model much better for lower number of calories than for higher as shown by much larger residuals value.
+
+* Independent observation:
+
+***
+
+###Exercise 7.26: Body measurements, Part III.  
+Exercise 7.15 introduce data on shoulder girth and height of a group of individuals.  The mean shoulder girth is 107.20 cm with a standard deviation of 10.37 cm. The mean Height is 171.14 cm with a standard deviation of 9.41 cm.  The correlation between height and shoulder girth is 0.67
+
+a) Write the equation of the regression line for predicting height.
+The regression line equation:  
+                               $height\quad =\quad { { \beta  }_{ 0 } }\quad +\quad { { \beta  }_{ 1 } }\quad \times \quad shoulder\quad girth$
+
+the slope of this equation ${ \beta  }_{ 1 }$ by ${ { b }_{ 1 } }$ as defined as follows:  
+                              ${ { b }_{ 1 } }\quad =\quad \frac { { s }_{ height } }{ { s }_{ shoulder } } \quad \times \quad R\quad =\quad \frac { 9.41 }{ 10.37 } \quad \times \quad 0.67$
+                           ${ { b }_{ 1 } }\quad =\quad 0.61$
+                           
+The data point represented by mean for shoulder girth and mean for height is on the regression line so the point (107.20, 171.14) would satify the equation.  By substituing we can solve for ${ { b }_{ 0 } }$.  
+                       ${ 171.14\quad =\quad { b }_{ 0 }\quad +\quad { b }_{ 1 } }\quad \times \quad 107.20$
+                       ${ { b }_{ 0 } }\quad =\quad 171.14\quad -\quad { b }_{ 1 }\quad \times \quad 107.20\quad =\quad 171.14\quad -\quad 0.61\quad \times \quad 107.20\quad$  
+                       ${ { b }_{ 0 } }\quad =\quad 105.748$
+
+b) Interpret the slop and the intercept in this context
+b1: For one centimeter increase in shoulder girth, the model predict an increase in height of 0.61.  
+b0: When the shoulder girth = 0, the height of individual would be 105.748 cm, this makes no sense in this context
+
+c) Calculate the R^2 of the regression line for predicting height from shoulder girth and interpret it in the context of the application.
+
+R^2 = (0.61)^2 = 0.3721 
+
+About 37% of the variability of height of individuals is accounted for by the model.
+
+d) A randomly selected student from your class has a shoulder girth of 100 cm. Predict the height of this student using the model.
+Substituing the value x=100 into the equation we get the following result:  
+                      ${ \hat { y }  }_{ 100 }\quad =\quad 105.748\quad +\quad 0.67\quad \times \quad 100\quad =\quad 105.748\quad +\quad 67\quad =\quad 172.748$
+                      ${ \hat { y }  }_{ 100}\quad =\quad 172.7484$  
+                      
+e) The student from part (d) is 160 cm tall.  Calculate the residual, and explain what this residual means.
+The residual is the difference between the actual data and the projected data from the equation and is denoted e.  
+                      ${ e }_{ 100 }\quad =\quad { y }_{ 100 }\quad -\quad { \hat { y }  }_{ 100 }\quad =\quad 160\quad -\quad 172.748\quad =\quad -12.748$
+
+The residual is negative, this means that the actual data point is below the linear regression line and that the model is overestimating the value.  A value of 12.748 is a large residual, meaning that the model does not fit this data point.  
+
+f) A one year old has a shoulder girth of 56 cm.  Would it be appropriate to use this linear model to predict the height of this child?  
+
+The original data set had a response variable values between 80 and 140 cm.  A measure of 56 is outside the sample and we would require extrapolation and would not be appropriate.  
+
+***
+
+###Exercise 7.30: Cats, Part I  
+The following regression outpout is for predicting the heart weight (in g) of cats from their body weight (in kg). The coefficients are estimated using a dataset of 144 domestic cats.
+
+---------------------|------------|-------------|-----------|------------  
+                     |  Esitmate  |  Std. Error |  t-value  |  Pr(>|t|)  
+---------------------|------------|-------------|-----------|------------    
+ (Intercept)         |    -0.357  |      0.692  |   -0.515  |   0.607  
+---------------------|------------|-------------|-----------|------------  
+  body wt            |     4.034  |      0.250  |   16.119  |   0.000  
+---------------------|------------|-------------|-----------|------------  
+x = 1.452              R^2^ = 64.66%        R^2^adj = 64.41%
+
+a) Write out the linear model.  
+When provided with a regression output, the value for b0 and b1 are provided by the first column titled "Estimate" respectively, hence, substituing the data, we have the following:  
+                     $\hat { heart\quad weight } \quad =\quad -0.357\quad +\quad 4.034\quad \times \quad body\quad weight$  
+                     $\hat { y } \quad =\quad -0.357\quad +\quad 4.034\quad \times \quad x$  
+
+b) Interpret the intercept.  
+Should a cat have a body weight of 0 kg, it would have a heart weight of -0.357 g.  This does not make sense.  the value x=0 is out of the data range we were given.  
+
+c) Interpret the slope.  
+For an increment of 1 kg in body weight in a cat, the heart weight would increase by 4.034 g.  
+
+d) Interpret R^2^.  
+64.66% of the variance in hear weght (g) is due to the linear model.
+
+e) Calculate the correlation coefficient.  
+The correlation coefficient is R, hence:
+                    $R\quad =\quad \sqrt { { R }^{ 2 } } \quad =\quad \sqrt { 64.66 } \quad =\quad 8.041144\quad =\quad 8.04$  
+
+***
+
+###Exercise 7.40: Rate my professor  
+Many college courses conclude by giving students the opportunity to evaluate the course and the instructor anonymously.  However, the use of these student evaluations as an indicator of course quality and teaching effectiveness is often criticized because these measures may reflect the influence of non-teaching related characteristics, such as the physical appearance of the instructor.  Researchers at University of Texas, Austin collected data on teaching evaluation score (higher score means better) and standardized beauty score (a score of 0 means average, negative score means below average, and a positive score means above average) for a 463 professors.  The scatter plot below shows the relationship between these variables and also provided is a regression output for prediticting teaching evaluation score from beauty score.  
+
+
+a) Given that the average standardised beauty score is -0.883 and average teaching evaluation score is 3.9983, aclulate the slope.  Alternatively, the slope may be computed using just the information provided in the model summary table.
+
+The data point comprised by the means is on the linear regression line.  Also from the regression output, the intercept = 4.010.  Substituing these values we obtain:
+                   $\hat { y } =\quad 4.010\quad +\quad { b }_{ 1 }\quad \times \quad x$
+                   $3.9983\quad =\quad 4.010\quad +\quad { b }_{ 1 }\quad \times \quad (-0.0883)$
+Solving for b1, we obtain:  
+                   ${ b }_{ 1 }\quad =\quad \frac { 3.9983\quad -\quad 4.010 }{ -0.0883 } \quad =\quad 0.1325028\quad =\quad 0.13$  
+
+b) The value of the slope is positive.
+
+c) Conditions required for linear regression:  
+* Linearity  
+  From the scatterplot of the data, there may be a weak positive linear relationship.
+
+* Nearly normal residuals  
+  From the histogram of the residuals, it is apparent that the residuals distribution is nearly normal  
+
+* Constant variability  
+  From the residuals scatterplot, we can see that the residual variability is constant and that there is no discernable pattern to the residual plot.  The residuals values seemd to be quite high.  
+  
+* Independent observations: 
+  We do not have much information on how the data sample was collected beyond the fact that it was collected for 463 professors.  We might assume independence of observations.
+  
+***
+
+ 
+
+
+                       
