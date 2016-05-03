@@ -1,0 +1,89 @@
+---
+title: "CUNY 606 Multiple Regressions"
+author: "Valerie Briot"
+date: "May 1, 2016"
+output: html_document
+---
+
+This document pertains to the homeworks for class CUNY 606 - Intro to Probability and Statistics on Chapter 8 - Multiple Regression.  
+
+###Exercise 8.2 - Baby weights, Part II  
+
+From the provided data set, we consider parity, which as a value of 0 if the child is the first born and 1 otherwise. The table provided shows the results of a linear regression mdoel for predicting the average birth weight of babies, measured in ounces, from parity.  
+
+a) Write the equation of the regression line.
+
+    $\widehat { birth-weight } =\quad 120.07\quad -\quad 1.93\cdot parity$  
+    
+b) Interpret the slope in this context and calculate the predicted birth weight of first borns and others
+First Borns weight = 120.07 - 1.93 x 0 = 120.07, 
+other Borns weight = 120.07 - 1.93 x 1 = 120.07 - 1.93 = 118.14  
+
+The estimated birth weight of babies not first borns is 1.93 ounces lower than baby first borns.
+
+c) Is there a statistically significant relationship between the average birth weight and parity?  
+
+${ H }_{ 0 }\quad :\quad { \beta  }_{ 1 }\quad =\quad 0$  
+{ H }_{ A }\quad :\quad { \beta  }_{ 1 }\quad \neq \quad 0$
+
+From the table, the T = 1.63 and p-value = 0.1052, this is greater than 0.05 so we can conclude that we cannot reject the ${ H }_{ 0 }$ hypothesis and that parity is not statistically significant.  
+
+---
+
+###Exercise 8.4 Absenteeism, Part I
+The summary table shows the results of a inear regression model for predicting the average number of days absent based on ethnic background (eth: 0 - aborignal, 1 - not aboriginal), sex (sex: 0 - female, 1 - male), and learner status (lrn: 0 - average learner, 1 - slow learner).
+
+a) Write the equation of the regression line.  
+$\hat { absences } \quad =\quad 18.93\quad -9.11\cdot eth\quad +\quad 3.10\cdot sex\quad +\quad 2.15\cdot lrn$  
+
+b) Interpret each one of the slope in this context.  
+slope for variable eth, this represents the average number of absences that would be reduce when children are not aborigenes.  
+
+Slope for variable sex, this represents the average number of absences more when the children are males  
+
+Slope for variable lrn, this represents the average number of absences more when the children have been identified as slow learner  
+
+c) Calculate the residual for the first observation in the data set: a student who is aboriginal, male, a slow learner, and missed 2 days of school.  
+
+${ e }_{ 1 }\quad =\quad { y }_{ 1 }\quad -\quad \hat { y } _{ 1 }$  
+
+Substituing; 
+${ y }_{ 1 }\quad =\quad 2$  
+$\hat { { y }_{ 1 } } \quad =\quad 18.93\quad -\quad 9.11\times 0\quad +\quad 3.10\times 1\quad +\quad 2.15\times 1\quad =\quad 18.93\quad +\quad 3.10\quad +\quad 2.15\quad =\quad 24.18$  
+
+${ e }_{ 1 }\quad =\quad 2\quad -\quad 24.18\quad =\quad -22.18$  
+
+d) The variance of the residuals is 240.57, and the variabnce of the number of absent days for all students in the data set is 264.17.  Calculate the R^2^ and the adjusted R^2^.  Note that there are 146 observations in the data set.  
+
+${ R }^{ 2 }\quad =\quad 1\quad -\quad \frac { vaiability\quad in\quad residuals }{ variability\quad in\quad the\quad outcome } \quad =\quad 1\quad -\quad \frac { 240.57 }{ 264.17 } \quad =\quad 0.08934$  
+
+${ R }_{ adj }^{ 2 }\quad =\quad 1\quad -\quad \frac { Var({ e }_{ 1 }) }{ Var({ y }_{ 1 }) } \quad \times \quad \frac { n\quad -\quad 1 }{ n\quad -\quad k\quad -\quad 1 } =\quad 1\quad -\quad \frac { 240.57 }{ 264.17 } \quad \times \quad \frac { 146\quad -\quad 1 }{ 146\quad -\quad 3\quad -\quad 1 } \quad 1\quad -\quad \frac { 240.57 }{ 264.17 } \quad \times \quad \frac { 145 }{ 142 } \quad =\quad 0.070097$  
+
+---
+
+###Exercise 8.8 Absenteeism, Part II
+
+The adjusted R-square for the full model is 0.0701, by dropping 1 variable at a time and calculating the adjusted R-square again, we can concluded that we are getting a better adjusted R-square when dropping the 'Learner Status', hence, we would suggest to the model, 4, without learner status is a better fit.  
+
+---
+
+###Exercise 8.16 Challenger disaster, Part I
+
+a) Each column of the table above represent a different shuttle mission.  Examine these data and describe what you observe with espect to the relationship between temperatures and damaged O-rings.  
+
+It appears that there is more occurrences of damaged O-rings for lower Temperatures.  
+
+b) Failures have been coded as 1 for a damaged O-ring and O for an undamaged O-ring, and a logistic regression model was fit to these data.  
+Describe teh key components of this summary table in words.  
+
+Intercept: The log odds of damaged O-ring when temperature is 0.  
+
+Slope: For a unit increase in temperature (1 degree) how much will
+the log odds ratio change.  
+
+c) Write the logistic model using the point estimates of the model parmaeters
+
+$log(\frac { p }{ 1-p } )\quad =\quad 11.6630\quad -\quad 2.162\cdot temperature$  
+
+---
+
