@@ -1,0 +1,387 @@
+---
+title: "CUNY606 - Final Project"
+author: "Valerie Briot"
+date: "May 17, 2016"
+output: html_document
+---
+
+This document is the final exam for CUNY 606 - Intro to Statistics and Probabilities - Spring 2016.  
+
+###Part I
+
+Figure A below represents the distribution of an observed variable. Figure B below represents the distribution
+of the mean from 500 random samples of size 30 from A. The mean of A is 5.05 and the mean of B is 5.04.
+The standard deviations of A and B are 3.22 and 0.58, respectively
+
+####a. Describe the two distributions  
+
+The distribution for the observations, represented by graph A is unimodal distribution which is highly skeewed to the right. From the graph, we would expect the presence of outliers with values in 20's or above. We would expect the median to be lower than the mean.  This distribution shows wide variation.  We were told that mean for this distribution is 5.04 and standard deviation = 3.22
+
+
+The other distribution formed from the sample mean distribution represented by graph B has a symetrical distribution.  We were told that mean for this distribution is 5.04 and standard deviation 0.58.  For an approximately normal distribution, the data span over 3 standard deviations, which is quite a wide spread.  
+
+####b.Explain why the means of these two distributions are similar but the standard deviations are not  
+
+Since Figure B represents the distribution of the mean from 500 random samples of size 30 from A, we would expect the mean of this distribution to be similar to the mean of the original population A as per application of the central Limit Theorem. 
+The standar deviation of the sample mean describe the margin of error from the estimate to the true mean of the population.  It is call the Standard Error and can be found by formula SE = Sigma/sqrt(n), hence in this case 3.22/sqrt(30)= 0.58788
+
+
+####c. What is the statistical principal that describes this phenomenon (2 pts)?  
+
+**Central Limit theorem**  
+which stated informaly:  
+If a sampe consists of a least 30 independednt observations and the data are not strongly skewed, then the distribution of the sample mean is well approximated by a normal method.  
+
+***
+
+###Part II
+```{r library, eval = TRUE, echo = FALSE, warning = FALSE}
+library(ggplot2)
+```
+
+####Data Sets:
+
+```{r data-sets, eval=TRUE, echo=TRUE}
+options(digits=2)
+data1 <- data.frame(x=c(10,8,13,9,11,14,6,4,12,7,5),
+y=c(8.04,6.95,7.58,8.81,8.33,9.96,7.24,4.26,10.84,4.82,5.68))
+
+data2 <- data.frame(x=c(10,8,13,9,11,14,6,4,12,7,5),
+y=c(9.14,8.14,8.74,8.77,9.26,8.1,6.13,3.1,9.13,7.26,4.74))
+
+data3 <- data.frame(x=c(10,8,13,9,11,14,6,4,12,7,5),
+y=c(7.46,6.77,12.74,7.11,7.81,8.84,6.08,5.39,8.15,6.42,5.73))
+
+data4 <- data.frame(x=c(8,8,8,8,8,8,8,19,8,8,8),
+y=c(6.58,5.76,7.71,8.84,8.47,7.04,5.25,12.5,5.56,7.91,6.89))
+
+```
+
+For each column, calculate (to two decimal places):
+
+####a. The mean (for x and y separately):
+
+For each Data Set, we will calculate the mean for x and y denoted mx and my respectively. 
+
+```{r means, eval=TRUE, echo=FALSE}
+# Data Set 1:
+mx1 <- mean(data1$x)
+my1 <- mean(data1$y)
+
+# Data Set 2:
+mx2 <- mean(data2$x)
+my2 <- mean(data2$y)
+
+# Data Set 3:
+mx3 <- mean(data3$x)
+my3 <- mean(data3$y)
+
+# Data Set 4:
+mx4 <- mean(data4$x)
+my4 <- mean(data4$y)
+```
+
+The results will be displayed in a tabular form:  
+
+Data  | variable x | variable y  
+----- | ---------- | -----------
+set 1 | `r mx1`    |  `r my1`  
+set 2 | `r mx2`    |  `r my2`  
+set 3 | `r mx3`    |  `r my3`  
+set 4 | `r mx4`    |  `r my4`  
+
+
+####b. The median (for x and y separately):
+
+For each data set, we will calculate the median for x and y denoted mdx and mdy respectively.  
+
+```{r median, eval = TRUE, echo = FALSE}
+# Data Set 1:
+mdx1 <- median(data1$x)
+mdy1 <- median(data1$y)
+
+# Data Set 2:
+mdx2 <- median(data2$x)
+mdy2 <- median(data2$y)
+
+# Data Set 3:
+mdx3 <- median(data3$x)
+mdy3 <- median(data3$y)
+
+# Data Set 4:
+mdx4 <- median(data4$x)
+mdy4 <- median(data4$y)
+```
+
+Again, we will display the results in a tabular form:  
+
+Data  | variable x | variable y  
+----- | ---------- | -----------
+set 1 | `r mdx1`   |  `r mdy1`  
+set 2 | `r mdx2`   |  `r mdy2`  
+set 3 | `r mdx3`   |  `r mdy3`  
+set 4 | `r mdx4`   |  `r mdy4`  
+
+
+####c. The standard deviation (for x and y separately):
+
+For each data set, we will calculate the standard deviation for x and y denoted sdx and sdy respectively.  
+
+```{r Standar-deviation, eval = TRUE, echo = FALSE}
+# Data Set 1:
+sdx1 <- sd(data1$x)
+sdy1 <- sd(data1$y)
+
+# Data Set 2:
+sdx2 <- sd(data2$x)
+sdy2 <- sd(data2$y)
+
+# Data Set 3:
+sdx3 <- sd(data3$x)
+sdy3 <- sd(data3$y)
+
+# Data Set 4:
+sdx4 <- sd(data4$x)
+sdy4 <- sd(data4$y)
+```
+
+Again, we will display the results in a tabular form:  
+
+Data  | variable x | variable y  
+----- | ---------- | -----------
+set 1 | `r sdx1`   |  `r sdy1`  
+set 2 | `r sdx2`   |  `r sdy2`  
+set 3 | `r sdx3`   |  `r sdy3`  
+set 4 | `r sdx4`   |  `r sdy4`   
+
+
+For each x and y pair, calculate (also to two decimal places):  
+
+####d. The correlation:  
+
+For each pair (x,y) we will calcuate the correlation denoted correlation.  
+
+```{r correlation, eval=TRUE, echo = FALSE}
+correlation1 <- cor(data1$x, data1$y)
+correlation2 <- cor(data2$x, data2$y)
+correlation3 <- cor(data3$x, data3$y)
+correlation4 <- cor(data4$x, data4$y)
+```
+
+The correlation for each pair will be printed below: 
+
+Data  | Correlation (x,y) 
+----- | -----------------
+Set 1 | `r correlation1`
+Set 2 | `r correlation2`  
+Set 3 | `r correlation3`  
+Set 4 | `r correlation4`  
+
+####e. Linear regression equation:
+
+For each data set, we will determine the regression line equation.  
+
+```{r linear-regression, eval = TRUE, echo = FALSE}
+lm1 <- lm(data1$y ~ data1$x)
+lm2 <- lm(data2$y ~ data2$x)
+lm3 <- lm(data3$y ~ data3$x)
+lm4 <- lm(data4$y ~ data4$x)
+
+#Extract line coefficients and store
+b0.1 <- lm1$coefficients[[1]]
+b1.1 <- lm1$coefficients[[2]]
+
+b0.2 <- lm2$coefficients[[1]]
+b1.2 <- lm2$coefficients[[2]]
+
+b0.3 <- lm3$coefficients[[1]]
+b1.3 <- lm3$coefficients[[2]]
+
+b0.4 <- lm4$coefficients[[1]]
+b1.4 <- lm4$coefficients[[2]]
+
+```
+
+Linear Line equation:   
+$\hat { y } \quad =\quad { \beta  }_{ 0 }\quad +\quad { \beta  }_{ 1 }\cdot x\quad$ 
+
+For first data set, we have:
+y = `r b0.1` + `r b1.1` x 
+
+
+For second data set, we have:
+y = `r b0.2` + `r b1.2` x
+
+For third data set, we have:
+y = `r b0.3` + `r b1.3` x
+
+For fourth data set, we have:
+y = `r b0.4` + `r b1.4` x
+
+####f. R-Squared:
+
+The R-Squared for the first data set is `r summary(lm1)$r.squared`
+
+The R-Squared for the second data set is `r summary(lm2)$r.squared`
+
+The R-Squared for the third data set is `r summary(lm3)$r.squared`
+
+The R-Squared for the fourth data set is `r summary(lm4)$r.squared`
+
+
+####g. Linear Regression Model Evaluation:  
+
+For each pair, is it appropriate to estimate a linear regression model? Why or why not? Be
+specific as to why for each pair and include appropriate plots!
+
+For each data plot, we would like to evaluate whether it is appropriate to estimate a linear regression model.  We will therefore check the following for each data set.  
+
+1. Linearity:  
+The data should show a linear trend  
+
+2. Nearly Normal Residuals:  
+Generally the residuals must be nearly normal.  
+
+3. Constant Variability:  
+The variability of points around the least squares line remains roughly constant.  
+
+4. Independent Observations:  
+The observations of the data set must be independent.  
+
+For the first condition, we will plot the scatter graph and observe the pattern.  
+For the second condition, we will plot the qqplot for the residuals and observe the pattern.  
+For the third condition, we will plot the residual graph and observe the pattern.
+For the fourth condition, we will assume independence unless we have evidence to the contrary.  
+
+**Evaluation for Data Set 1:**  
+
+First, we will look at the scatter plot.  
+
+```{r scatter-plot1, eval=TRUE, echo=FALSE}
+
+ggplot(data1, aes(x = x, y=y)) + geom_point(size = 2, color="firebrick")
+```
+
+From the scatter plot, it appears that there is a positive linear relationship.  The correlation for this data set is `r correlation1`, which would indicate a strong relationship.  
+
+We will now proceed with lookting at the residual plot 
+
+```{r residual-plot1, eval=TRUE, echo=FALSE}
+qqnorm(lm1$residuals)
+qqline(lm1$residuals)
+```
+
+From the qqplot of the residuals, it appears that the points are closed to the line with the exception of the 2 point at with lower values.    
+We will not plot the histogram for the residuals.    
+
+```{r residual-histogram1, eval = TRUE, echo=FALSE}
+ggplot(data=lm1, aes(lm1$residuals)) + geom_histogram(binwidth = 0.1)
+```
+
+The distribution for the histogram of the residuals show a unimodal symetrical distribution. Due to the sparcity and discreet nature of the data, it is difficult to draw conclusion but We would surmize the the residual distribution from the histogram.  We will therefore defer to the qqplot for residual to check for "normal" distribution of the residuals.  
+
+We will now observe the residual plot and determine whether the points have a constant variability.
+
+```{r residuals-plot-v1, eval=TRUE, echo=FALSE}
+plot(lm1$residuals ~ data1$x)
+abline(h = 0, lty = 3)
+```
+
+From this graph, we can conclude that the variability of the data is constant.  
+
+We will assume indepence of the observations.  
+
+*In summary for data set 1, it would be appropriate to estimate a regression line model.*    
+
+**Data Set # 2**  
+
+We will now perform a similar evaluation on the second data set.  
+
+We first look at the scatter plot.  
+
+```{r scatter-plot2, eval=TRUE, echo=FALSE}
+
+ggplot(data2, aes(x = x, y=y)) + geom_point(size = 2, color="firebrick")
+```
+
+From the scatter plot, it appears that there is strong relationship between the variables but it is not a linear one. It appears to be a parabola.  The correlation for this data set is `r correlation2`.  
+
+*From this observation, we would conclude that it would not be appropriate to estimate a regression line model*
+
+**Data Set # 3**  
+
+We will now look at the scatter plot for the third data set.  
+
+```{r scatter-plot3, eval=TRUE, echo=FALSE}
+
+ggplot(data3, aes(x = x, y=y)) + geom_point(size = 2, color="firebrick")
+
+```
+
+From the scatter plot, it appears that there is a positive linear relation between the variables.  There is an outlier point.  The correlation for the 2 variables is `r correlation3` and would denotes a strong relationship.  
+
+We will now look at the qqplot for the residuals.  
+
+```{r residual-plot3, eval=TRUE, echo=FALSE}
+qqnorm(lm3$residuals)
+qqline(lm3$residuals)
+```
+
+Except for the outlier, all other points are on the line, wich would indicate the the residuals follow a normal distribution.  
+
+```{r residual-histogram3, eval = TRUE, echo=FALSE}
+ggplot(data=lm3, aes(lm3$residuals)) + geom_histogram(binwidth = 0.1)
+```
+
+The residual distribution appears to be uniform, the outlier would need to be accounted for. Since we have a finite sample with only 11 data points, it is difficult to interpret the histogram of the residuals.  We will rely on the qqplot of the residuals to evaluate distribution of the residuals.  
+
+We will now look at the residual plot against the x variable to observe the variabilty of the data.  
+
+```{r residuals-plot-v3, eval=TRUE, echo=FALSE}
+plot(lm3$residuals ~ data3$x)
+abline(h = 0, lty = 3)
+```
+
+From this plot, we can observe that the variability of the points is increasing as the x variable increase.  The variability is therefore not constant.  
+
+*We will conclude that for Data Set 3, it would not be appropriate to estimate a regression line model.*  
+
+**Data Set # 4:**  
+
+
+```{r scatter-plot4, eval=TRUE, echo=FALSE}
+
+ggplot(data4, aes(x = x, y=y)) + geom_point(size = 2, color="firebrick")
+
+```
+
+From the scatter plot, we would expect that the data points would be in vertial lime with an outlier quite away from the rest of the data.  But the line model is y = `r b0.4` + `r b1.4` x.  We would surmize that the observations may not be independent.  
+
+*We will therefore concluded that it would not be appropriate to estimate a regression line model.*
+
+
+Explain why it is important to include appropriate visualizations when analyzing data. Include
+any visualization(s) you create. (2 pts)
+
+These cases illustrate clearly the shortcoming of reliying only on summary statistics and results calculation since we had very similar results; Only the median were different.  However, when we looked at the various graphs we obtain different understanding of the data.    Visualization is an important aspect the data analysis and as is summary statistics.  Both should be taken into consideration when performing statistical analysis.  
+
+(see graph in the above section)
+
+In addition, we will graph histograms for each different data set components, please note that data1$x, data2$x, data3$x have the same values so that we will only have one graph for these.  
+
+**Histograms for data sets**   
+
+```{r histograms, eval=TRUE, echo=FALSE}
+# x variables
+ggplot(data=data1, aes(data1$x)) + geom_histogram(binwidth = 0.1) + ggtitle("x variable for data sets 1, 2, 3")
+ggplot(data=data4, aes(data4$x)) + geom_histogram(binwidth = 0.1) + ggtitle("x variable for data sets 4")
+
+# y variables
+ggplot(data=data1, aes(data1$y)) + geom_histogram(binwidth = 0.1) + ggtitle("y variable for data sets 1")
+ggplot(data=data2, aes(data2$y)) + geom_histogram(binwidth = 0.1) + ggtitle("y variable for data sets 2")
+ggplot(data=data1, aes(data3$y)) + geom_histogram(binwidth = 0.1) + ggtitle("y variable for data sets 3")
+ggplot(data=data1, aes(data4$y)) + geom_histogram(binwidth = 0.1) + ggtitle("y variable for data sets 4")
+```
+
+
+Thank you
